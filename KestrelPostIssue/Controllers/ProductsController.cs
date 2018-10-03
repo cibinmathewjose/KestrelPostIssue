@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace KestrelPostIssue.Controllers
 {
@@ -19,10 +21,12 @@ namespace KestrelPostIssue.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Product value)
+        [HttpPut]
+        public void Put()
         {
-            Console.Write($"UPDATE {value?.Name}");
+            var str = new StreamReader(Request.Body).ReadToEnd();
+            JObject testdata = JObject.Parse(str);
+            Console.Write(testdata.ToString());
         }        
     }
 }
